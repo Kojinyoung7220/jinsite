@@ -42,6 +42,9 @@ public class PostController {
         //          -> 한 번에 일괄적으로 잘 처리되는 케이스가 없다
         //          -> 잘 관리하는 형태가 중요하다!
         request.validate();
+
+        System.out.println("hello world");
+
         postService.write(request);
     }
 
