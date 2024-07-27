@@ -43,7 +43,7 @@ public class PostController {
         //          -> 잘 관리하는 형태가 중요하다!
         request.validate();
 
-        System.out.println("안녕하시렵니까?");
+        System.out.println("안녕하시렵니까 진사이트-1");
 
         postService.write(request);
     }
