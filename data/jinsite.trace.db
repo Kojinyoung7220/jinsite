@@ -1,0 +1,6 @@
+2024-07-30 19:50:23.678700+09:00 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "DATA_ENTITY" not found; SQL statement:
+INSERT INTO DATA_ENTITY (CONTENT, TITLE) VALUES ('Sample Content', 'Sample Title') [42102-224]
+2024-07-30 19:50:45.878332+09:00 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]POST"; expected "PREPARE"; SQL statement:
+POST [42001-224]

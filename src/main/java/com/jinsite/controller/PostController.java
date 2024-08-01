@@ -1,7 +1,6 @@
 package com.jinsite.controller;
 
-import com.jinsite.domain.Post;
-import com.jinsite.exception.InvalidRequest;
+import com.jinsite.config.data.UserSession;
 import com.jinsite.request.PostCreate;
 import com.jinsite.request.PostEdit;
 import com.jinsite.request.PostSearch;
@@ -10,8 +9,6 @@ import com.jinsite.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +27,11 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    @GetMapping("/foo")
+    public Long foo(UserSession userSession){
+        log.info(">>>{}", userSession.id);
+        return userSession.id;
+    }
 
     @PostMapping("/posts")
     public void post(@RequestBody @Valid PostCreate request) {
@@ -42,7 +44,11 @@ public class PostController {
         //          -> 한 번에 일괄적으로 잘 처리되는 케이스가 없다
         //          -> 잘 관리하는 형태가 중요하다!
         request.validate();
-
+        //인증을 어떻게 받아야 할까?
+        //1. GET Parameter로 받는다
+        //2. POST(body) value 로 받는다
+        //3. Header로 받는다.
+        // => 하지만 다 필요없고 스프링 인터셉터로 해결 가능!~~
         postService.write(request);
     }
 

@@ -35,8 +35,8 @@ onMounted(() => {
       <h2 class="title">{{ post.title }}</h2>
 
       <div class="sub d-flex">
-        <div class="category">개발</div>
-        <div class="regDate">2022-06-01 23:59:59</div>
+        <div class="category">글쓴이</div>
+        <div class="regDate">2024-07-29 23:59:59</div>
       </div>
     </el-col>
   </el-row>

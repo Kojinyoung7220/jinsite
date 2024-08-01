@@ -28,8 +28,8 @@ axios.get("/api/posts?page=1&size=5").then((response) => {
       </div>
 
       <div class="sub d-flex">
-        <div class="category">개발</div>
-        <div class="regDate">2022-06-01</div>
+        <div class="category">글쓴2</div>
+        <div class="regDate">2024-07-29</div>
       </div>
     </li>
   </ul>
