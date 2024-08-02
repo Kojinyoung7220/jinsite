@@ -4,6 +4,8 @@ import com.jinsite.config.data.UserSession;
 import com.jinsite.domain.Session;
 import com.jinsite.exception.Unauthorized;
 import com.jinsite.repository.SessionRepository;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +17,10 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import java.util.Base64;
 import java.util.Optional;
+
+import static com.jinsite.domain.QSession.session;
 
 /**
  * 아규먼트 리졸버 사용해서 로그인 처리
@@ -28,6 +33,7 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
     //ex) /foo로 왔을 때 이 메소드의 이 타입이 너가 원하는 게 맞아?
 
     private final SessionRepository sessionRepository;
+    private static final String KEY = "3ZIagOxhx+NOvMS70FzYns7j2tjd07GO5yuyHgjFcds=";
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -37,26 +43,27 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
     //dto에 값을 세팅해준다
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        log.info("resolveArgument실행===============");
         //쿠키를 꺼내온다.
-        HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
-        if(servletRequest == null){
-            log.error("servletRequest null");
+        String jws = webRequest.getHeader("Authorization");
+        if(jws == null || jws.equals("")){
+            log.info("오류발생");
             throw new Unauthorized();
         }
+        byte[] decodedKey = Base64.getDecoder().decode(KEY);
 
-        Cookie[] cookies = servletRequest.getCookies();
-        if(cookies.length == 0){
-            log.info("쿠키가 없음");
+        try {
+
+            Jws<Claims> claims = Jwts.parser()
+                    .setSigningKey(decodedKey)
+                    .build()
+                    .parseClaimsJws(jws);
+            String userId = claims.getBody().getSubject();
+
+            return new UserSession(Long.parseLong(userId));
+
+        } catch (JwtException e) {
             throw new Unauthorized();
         }
-        
-        //데이터베이스 사용자 확인방법
-        String accessToken = cookies[0].getValue();
-
-        Session session = sessionRepository.findByAccessToken(accessToken)
-                .orElseThrow(Unauthorized::new);
-
-
-        return new UserSession(session.getUser().getId());
     }
 }

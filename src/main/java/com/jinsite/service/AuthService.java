@@ -16,7 +16,7 @@ public class AuthService {
     private final UserRepository userRepository;
 
     @Transactional
-    public String signIn(Login login){
+    public Long signIn(Login login){
 
         // DB에서 조회
         User user = userRepository.findByEmailAndPassword(login.getEmail(), login.getPassword())
@@ -24,6 +24,6 @@ public class AuthService {
 
         Session session = user.addSession();
 
-        return session.getAccessToken();
+        return user.getId();
     }
 }
