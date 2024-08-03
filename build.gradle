@@ -40,10 +40,21 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	//스프링 시큐리티 비밀번호 암호화 => 스크립토
+	implementation 'org.springframework.security:spring-security-crypto'
+	//스크립토만 하면 오류생겨서 검색 후 찾기
+	implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+
+
+
 	//JWT다운
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-gson:0.12.6'
+
+	//스프링부트 어노테이션 컨피그레션 프로세서
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
 
 	//query 디펜던시 종속 설치
 	//querydsl

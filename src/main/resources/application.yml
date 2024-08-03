@@ -13,8 +13,6 @@ spring:
 
   jpa:
     defer-datasource-initialization: true
-  sql:
-    init-model: always
 
   data:
     web:
@@ -24,7 +22,9 @@ spring:
         default-page-size: 20
 
 jinsite:
-  hello: "world"
+  jwt-key: "3ZIagOxhx+NOvMS70FzYns7j2tjd07GO5yuyHgjFcds="
+
+
 
 
 

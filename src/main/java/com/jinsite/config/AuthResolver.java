@@ -33,7 +33,7 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
     //ex) /foo로 왔을 때 이 메소드의 이 타입이 너가 원하는 게 맞아?
 
     private final SessionRepository sessionRepository;
-    private static final String KEY = "3ZIagOxhx+NOvMS70FzYns7j2tjd07GO5yuyHgjFcds=";
+    private final AppConfig appConfig;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -43,23 +43,17 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
     //dto에 값을 세팅해준다
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        log.info("resolveArgument실행===============");
-        //쿠키를 꺼내온다.
         String jws = webRequest.getHeader("Authorization");
         if(jws == null || jws.equals("")){
-            log.info("오류발생");
             throw new Unauthorized();
         }
-        byte[] decodedKey = Base64.getDecoder().decode(KEY);
-
         try {
-
             Jws<Claims> claims = Jwts.parser()
-                    .setSigningKey(decodedKey)
+                    .setSigningKey(appConfig.getJwtKey())
                     .build()
+                    //이 과정에서 만료 여부도 자동으로 체크된다.
                     .parseClaimsJws(jws);
             String userId = claims.getBody().getSubject();
-
             return new UserSession(Long.parseLong(userId));
 
         } catch (JwtException e) {
