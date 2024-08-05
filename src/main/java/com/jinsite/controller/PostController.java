@@ -1,6 +1,5 @@
 package com.jinsite.controller;
 
-import com.jinsite.config.data.UserSession;
 import com.jinsite.request.PostCreate;
 import com.jinsite.request.PostEdit;
 import com.jinsite.request.PostSearch;
@@ -27,11 +26,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    @GetMapping("/foo")
-    public Long foo(UserSession userSession){
-        log.info(">>>{}", userSession.id);
-        return userSession.id;
-    }
 
     @PostMapping("/posts")
     public void post(@RequestBody @Valid PostCreate request) {
