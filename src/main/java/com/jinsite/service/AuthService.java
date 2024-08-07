@@ -1,11 +1,11 @@
 package com.jinsite.service;
 
-import com.jinsite.crypto.PasswordEncoder;
 import com.jinsite.domain.User;
 import com.jinsite.exception.AlreadyExistsEmailException;
 import com.jinsite.repository.UserRepository;
 import com.jinsite.request.Signup;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public void signup(Signup signup) {
         //중복 췌크~
@@ -25,8 +25,7 @@ public class AuthService {
             throw new AlreadyExistsEmailException();
         }
 
-        PasswordEncoder encoder = new PasswordEncoder();
-        String encryptedPassword = encoder.encrypt(signup.getPassword());
+        String encryptedPassword = passwordEncoder.encode(signup.getPassword());
 
         var user = User.builder()
                 .name(signup.getName())

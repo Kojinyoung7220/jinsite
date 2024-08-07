@@ -40,6 +40,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+
+	//스프링 시큐리티 Spring Session
+	implementation 'org.springframework.session:spring-session-jdbc'
+
+
+	//스프링 시큐리티 다운
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 	//스프링 시큐리티 비밀번호 암호화 => 스크립토
 	implementation 'org.springframework.security:spring-security-crypto'
 	//스크립토만 하면 오류생겨서 검색 후 찾기
