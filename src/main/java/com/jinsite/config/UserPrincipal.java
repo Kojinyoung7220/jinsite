@@ -22,7 +22,7 @@ public class UserPrincipal extends User {
     public UserPrincipal(com.jinsite.domain.User user){
         super(user.getEmail(), user.getPassword(),
                 List.of(    //회원가입시
-                        new SimpleGrantedAuthority("ROLE_USER") //ROLE_ADMIN 이렇게 해야 역활
+                        new SimpleGrantedAuthority("ROLE_ADMIN") //ROLE_~~~ 이렇게 해야 역활
                 ));
         this.userId = user.getId();
     }

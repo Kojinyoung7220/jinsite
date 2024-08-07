@@ -1,7 +1,6 @@
 package com.jinsite.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jinsite.crypto.ScryptPasswordEncoder;
 import com.jinsite.domain.User;
 import com.jinsite.repository.PostRepository;
 import com.jinsite.repository.UserRepository;

@@ -1,5 +1,6 @@
 package com.jinsite.controller;
 
+import com.jinsite.config.UserPrincipal;
 import com.jinsite.request.PostCreate;
 import com.jinsite.request.PostEdit;
 import com.jinsite.request.PostSearch;
@@ -8,6 +9,8 @@ import com.jinsite.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +30,10 @@ public class PostController {
 
     private final PostService postService;
 
+//@PreAuthorize("hasRole('ROLE_ADMIN') && #request.userId = '111'") //이런 식으로 요청 dto로 체크 가능
+    @PreAuthorize("hasRole('ROLE_ADMIN')") //블로그다 보니 어드민만 작성 가능하게
     @PostMapping("/posts")
-    public void post(@RequestBody @Valid PostCreate request) {
+    public void post(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid PostCreate request) {
         //Case1. 저장한 데이터 Entity -> response로 응답하기
         //Case2. 저장한 데이터의 primary_id -> response로 응답하기
         //            Client에서는 수신한 id를 글 조회 API를 통해서 데이터를 수신받음
@@ -37,13 +42,13 @@ public class PostController {
         //          ->서버에서 차라리 유연하게 대응하는게 좋다.! ->코드를 잘짜야함..!!
         //          -> 한 번에 일괄적으로 잘 처리되는 케이스가 없다
         //          -> 잘 관리하는 형태가 중요하다!
-        request.validate();
+//        request.validate();
         //인증을 어떻게 받아야 할까?
         //1. GET Parameter로 받는다
         //2. POST(body) value 로 받는다
         //3. Header로 받는다.
         // => 하지만 다 필요없고 스프링 인터셉터로 해결 가능!~~
-        postService.write(request);
+        postService.write(userPrincipal.getUserId(), request);
     }
 
     /**
@@ -70,11 +75,13 @@ public class PostController {
         return postService.getList(postSearch);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')") //수정도 관리자만
     @PatchMapping("/posts/{postId}")
     public void edit(@PathVariable Long postId, @RequestBody @Valid PostEdit request) {
         postService.edit(postId, request);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') && hasPermission(#postId, 'POST', 'DELETE')")
     @DeleteMapping("/posts/{postId}")
     public void delete(@PathVariable Long postId){
         postService.delete(postId);

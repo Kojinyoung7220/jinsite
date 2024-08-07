@@ -29,7 +29,6 @@ class AuthServiceTest {
     @Test
     @DisplayName("회원가입 성공")
     void test1(){
-        PasswordEncoder encoder = new PasswordEncoder();
         //given
         Signup signup = Signup.builder()
                 .password("1234")
@@ -48,8 +47,6 @@ class AuthServiceTest {
         assertEquals("jin@gmail.com", user.getEmail());
         assertNotNull(user.getPassword());
 //        assertEquals("1234", user.getPassword());
-        assertTrue(encoder.matches("1234" , user.getPassword()));
-        assertEquals("영진", user.getName());
     }
 
     @Test

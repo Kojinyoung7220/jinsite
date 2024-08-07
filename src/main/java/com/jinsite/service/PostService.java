@@ -3,7 +3,9 @@ package com.jinsite.service;
 import com.jinsite.domain.Post;
 import com.jinsite.domain.PostEditor;
 import com.jinsite.exception.PostNotFound;
+import com.jinsite.exception.UserNotFound;
 import com.jinsite.repository.PostRepository;
+import com.jinsite.repository.UserRepository;
 import com.jinsite.request.PostCreate;
 import com.jinsite.request.PostEdit;
 import com.jinsite.request.PostSearch;
@@ -25,15 +27,21 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public void write(PostCreate postCreate){
+    public void write(Long userId, PostCreate postCreate){
         //postCreate는 현재 requestDTO 형태이지 엔티티가 아니기 때문에
         //못들어간다. 그래서 일반 엔티티 형식으로 변환 해야한다. postCreate -> Entity
 //        Post post = new Post(postCreate.getTitle(), postCreate.getContent());
+
+        var user = userRepository.findById(userId)
+                .orElseThrow(UserNotFound::new);
+
         Post post = Post.builder()
-                        .title(postCreate.getTitle())
-                        .content(postCreate.getContent())
-                        .build();
+                .user(user)
+                .title(postCreate.getTitle())
+                .content(postCreate.getContent())
+                .build();
 
         postRepository.save(post);
     }

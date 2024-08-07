@@ -40,6 +40,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	//withmockuser 사용하자
+	testImplementation 'org.springframework.security:spring-security-test'
+
 
 	//스프링 시큐리티 Spring Session
 	implementation 'org.springframework.session:spring-session-jdbc'

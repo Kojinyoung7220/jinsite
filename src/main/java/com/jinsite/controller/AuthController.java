@@ -18,12 +18,6 @@ public class AuthController {
     private final AuthService authService;
     private final AppConfig appConfig;
 
-    @GetMapping("/auth/login")
-    public String login(){
-        return "로그인 페이지입니다.";
-    }
-
-
     @PostMapping("/auth/signup")
     public void signup(@RequestBody Signup signup){
         /// TODO: 2024-08-03  signup을 바로 넘겨주는건 안좋은 방법 => DTO를 통해 해결하는 게 좋다. 찾아보자.

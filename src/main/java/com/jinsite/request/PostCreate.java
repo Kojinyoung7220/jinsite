@@ -35,11 +35,11 @@ public class PostCreate {
         this.content = content;
     }
 
-    public void validate(){
-        if(title.contains("바보")){
-            throw new InvalidRequest("title", "제목에 바보를 포함할 수 없습니다.");
-        }
-    }
+//    public void validate(){
+//        if(title.contains("바보")){
+//            throw new InvalidRequest("title", "제목에 바보를 포함할 수 없습니다.");
+//        }
+//    }
 
 
     //빌더의 장점 -> 면접에 나올 수 있다
