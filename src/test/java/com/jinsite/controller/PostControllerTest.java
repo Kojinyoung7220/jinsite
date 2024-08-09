@@ -1,15 +1,15 @@
 package com.jinsite.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jinsite.config.jinSiteMockUser;
 import com.jinsite.domain.Post;
+import com.jinsite.domain.User;
 import com.jinsite.repository.PostRepository;
+import com.jinsite.repository.UserRepository;
 import com.jinsite.request.PostCreate;
 import com.jinsite.request.PostEdit;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -50,9 +50,13 @@ class PostControllerTest {
     @Autowired
     private PostRepository postRepository;
 
-    @BeforeEach
+    @Autowired
+    private UserRepository userRepository;
+
+    @AfterEach
     void clean() {
         postRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
 
@@ -82,8 +86,7 @@ class PostControllerTest {
 
     @Test
     @DisplayName("글 작성 요청시(/posts) DB에 값이 저장된다.")
-    @WithMockUser(username = "jinsite@gmial.com",
-            roles = {"ADMIN"})
+    @jinSiteMockUser()
     void test3() throws Exception {
         //given
         PostCreate request = PostCreate.builder()
@@ -113,6 +116,12 @@ class PostControllerTest {
     @Test
     @DisplayName("글 1개 조회")
     void test4() throws Exception {
+        User user = User.builder()
+                .name("진사이트")
+                .email("jin@gmail.com")
+                .email("1234")
+                .build();
+        userRepository.save(user);
         //given
         //클라이언트 요구사항
         //ex)json응답에서 title값 길이를 최대 10글자로 해주세요.
@@ -120,6 +129,7 @@ class PostControllerTest {
         Post post = Post.builder()
                 .title("1234567890987654321")
                 .content("bar")
+                .user(user)
                 .build();
 
         postRepository.save(post);
@@ -174,12 +184,20 @@ class PostControllerTest {
     @Test
     @DisplayName("글 여러개 조회22")
     void test5() throws Exception {
+        User user = User.builder()
+                .name("진사이트")
+                .email("jin@gmail.com")
+                .email("1234")
+                .build();
+        userRepository.save(user);
+
         //given
         List<Post> requestPosts = IntStream.range(0, 20)
                 .mapToObj(i -> {
                     return Post.builder()
                             .title("진사이트 제목 " + i)
                             .content("신축아파트 " + i)
+                            .user(user)
                             .build();
                 }).collect(Collectors.toList());
         postRepository.saveAll(requestPosts);
@@ -199,12 +217,20 @@ class PostControllerTest {
     @DisplayName("페이지를 0으로 요청하면 첫 페이지를 가져온다.")
         //Math함수를 써서 회피...!!
     void test6() throws Exception {
+        User user = User.builder()
+                .name("진사이트")
+                .email("jin@gmail.com")
+                .email("1234")
+                .build();
+        userRepository.save(user);
+
         //given
         List<Post> requestPosts = IntStream.range(0, 20)
                 .mapToObj(i -> {
                     return Post.builder()
                             .title("진사이트 제목 " + i)
                             .content("신축아파트 " + i)
+                            .user(user)
                             .build();
                 }).collect(Collectors.toList());
         postRepository.saveAll(requestPosts);
@@ -222,13 +248,15 @@ class PostControllerTest {
 
     @Test
     @DisplayName("글 제목 수정.")
-    @WithMockUser(username = "jinsite@gmial.com",
-            roles = {"ADMIN"})
+    @jinSiteMockUser()
     void test7() throws Exception {
+        User user = userRepository.findAll().get(0);
+
         //given
         Post post = Post.builder()
                 .title("진사이트")
                 .content("신축아파트")
+                .user(user)
                 .build();
 
         postRepository.save(post);
@@ -248,15 +276,16 @@ class PostControllerTest {
 
     @Test
     @DisplayName("게시글 삭제")
-    @WithMockUser(username = "jinsite@gmial.com",
-            roles = {"ADMIN"})
+    @jinSiteMockUser()
     void test8() throws Exception {
         //given
+        User user = userRepository.findAll().get(0);
+
         Post post = Post.builder()
                 .title("진사이트")
                 .content("신축아파트")
+                .user(user)
                 .build();
-
         postRepository.save(post);
 
         //expected
@@ -278,8 +307,7 @@ class PostControllerTest {
 
     @Test
     @DisplayName("존재하지 않는 게시글 수정")
-    @WithMockUser(username = "jinsite@gmial.com",
-            roles = {"ADMIN"})
+    @jinSiteMockUser()
     void test10() throws Exception {
 
         PostEdit postEdit = PostEdit.builder()

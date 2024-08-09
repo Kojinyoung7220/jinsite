@@ -93,8 +93,8 @@ public class SecurityConfig {
 
     @Bean
     public EmailPasswordAuthFilter emailPasswordAuthFilter(){
-        EmailPasswordAuthFilter filter = new EmailPasswordAuthFilter("/auth/login", objectMapper);
-        filter.setAuthenticationManager(authenticationManager());
+        EmailPasswordAuthFilter filter = new EmailPasswordAuthFilter("/auth/login", objectMapper);          //필터생성
+        filter.setAuthenticationManager(authenticationManager());       //필터의 값을 매니저에게 전달후 메니저는 값을 검증함.
 //        filter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/"));   //성공시에 "/" 경로로 가게 했지만
         filter.setAuthenticationSuccessHandler(new LoginSuccessHandler(objectMapper)); //이제는 성공시 json으로 응답값을 내려줌.
         filter.setAuthenticationFailureHandler(new LoginFailHandler(objectMapper));
@@ -108,11 +108,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(){
+    public AuthenticationManager authenticationManager(){ //DaoAuthenticationProvider은 기본적으로 이메일(또는 사용자 이름)과 비밀번호만을 검증하도록 설계되어 있다.
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService(userRepository));
         provider.setPasswordEncoder(passwordEncoder());
-
         return new ProviderManager(provider);
     }
 

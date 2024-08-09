@@ -1,6 +1,7 @@
 package com.jinsite.repository;
 
 import com.jinsite.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
@@ -10,7 +11,7 @@ import java.util.Optional;
  * 인증 컨트롤러에서 바디로 넘어온 값이 login으로 저장이 되고 여기에 저장이된다
  * AuthController -> AuthService -> UserRepository
  */
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmailAndPassword(String email, String password);
     Optional<User> findByEmail(String email);

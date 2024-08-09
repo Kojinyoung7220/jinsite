@@ -1,8 +1,10 @@
 package com.jinsite.service;
 
 import com.jinsite.domain.Post;
+import com.jinsite.domain.User;
 import com.jinsite.exception.PostNotFound;
 import com.jinsite.repository.PostRepository;
+import com.jinsite.repository.UserRepository;
 import com.jinsite.request.PostCreate;
 import com.jinsite.request.PostEdit;
 import com.jinsite.request.PostSearch;
@@ -32,21 +34,33 @@ class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @BeforeEach
     void clean(){
         postRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
     @DisplayName("글 작성")
     void test1(){
         //given
+
+        User user = User.builder()
+                .name("jin")
+                .email("jin@gmail.com")
+                .password("1234")
+                .build();
+        userRepository.save(user);
+
         PostCreate postCreate = PostCreate.builder()
                 .title("제목입니다.")
                 .content("내용입니다.")
                 .build();
         //when
-        postService.write(postCreate);
+        postService.write(user.getId(), postCreate);
 
         //than
         assertEquals(1L, postRepository.count());
