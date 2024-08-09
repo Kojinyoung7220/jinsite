@@ -1,7 +1,7 @@
 package com.jinsite.config;
 
 import com.jinsite.exception.PostNotFound;
-import com.jinsite.repository.PostRepository;
+import com.jinsite.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.PermissionEvaluator;

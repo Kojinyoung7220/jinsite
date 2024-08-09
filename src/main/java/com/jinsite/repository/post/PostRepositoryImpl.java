@@ -1,7 +1,6 @@
-package com.jinsite.repository;
+package com.jinsite.repository.post;
 
 import com.jinsite.domain.Post;
-import com.jinsite.domain.QPost;
 import com.jinsite.request.PostSearch;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

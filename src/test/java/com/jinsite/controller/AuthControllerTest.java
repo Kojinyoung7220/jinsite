@@ -1,11 +1,9 @@
 package com.jinsite.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jinsite.domain.User;
-import com.jinsite.repository.PostRepository;
+import com.jinsite.repository.post.PostRepository;
 import com.jinsite.repository.UserRepository;
 import com.jinsite.request.Signup;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

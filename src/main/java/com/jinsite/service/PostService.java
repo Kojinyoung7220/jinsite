@@ -4,7 +4,7 @@ import com.jinsite.domain.Post;
 import com.jinsite.domain.PostEditor;
 import com.jinsite.exception.PostNotFound;
 import com.jinsite.exception.UserNotFound;
-import com.jinsite.repository.PostRepository;
+import com.jinsite.repository.post.PostRepository;
 import com.jinsite.repository.UserRepository;
 import com.jinsite.request.PostCreate;
 import com.jinsite.request.PostEdit;
@@ -12,9 +12,6 @@ import com.jinsite.request.PostSearch;
 import com.jinsite.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

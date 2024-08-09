@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.List;
+
 /**
  *         postCreate는 현재 requestDTO 형태이지 엔티티가 아니기 때문에 못들어간다.
  *         그래서 일반 엔티티 형식으로 변환 해야한다. postCreate -> Entity
@@ -27,6 +29,9 @@ public class Post {
     @JoinColumn
     private User user;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy ="post")
+    private List<Comment> comments;
+
     @Builder
     public Post(String title, String content, User user) {
         this.title = title;
@@ -47,5 +52,10 @@ public class Post {
 
     public Long getUserId(){
         return this.user.getId();
+    }
+
+    public void addComment(Comment comment){
+        this.comments.add(comment);
+        comment.setPost(this);
     }
 }

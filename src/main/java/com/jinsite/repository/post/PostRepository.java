@@ -1,4 +1,4 @@
-package com.jinsite.repository;
+package com.jinsite.repository.post;
 
 import com.jinsite.domain.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
