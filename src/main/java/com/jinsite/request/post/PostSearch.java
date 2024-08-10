@@ -1,4 +1,4 @@
-package com.jinsite.request;
+package com.jinsite.request.post;
 
 import lombok.Builder;
 import lombok.Data;

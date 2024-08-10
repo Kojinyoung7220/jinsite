@@ -68,9 +68,26 @@ public class ExceptionController {
         return response;
     }
 
+    @ResponseBody
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> exception(Exception e){
+        log.error("예외발생", e);
+
+        ErrorResponse body = ErrorResponse.builder()
+                .code("500")
+                .message(e.getMessage())
+                .build();
+
+        //응답 json validation ->제목에 바보를 포함할 수 없습니다.
 
 
+        ResponseEntity<ErrorResponse> response = ResponseEntity.status(500)
+                .body(body);
+
+        return response;
+    }
 }
+
 
 
 

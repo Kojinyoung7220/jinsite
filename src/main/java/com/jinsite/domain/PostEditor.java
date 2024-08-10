@@ -1,7 +1,5 @@
 package com.jinsite.domain;
 
-import com.jinsite.request.PostEdit;
-import lombok.Builder;
 import lombok.Getter;
 
 /**

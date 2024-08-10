@@ -1,7 +1,7 @@
 package com.jinsite.repository.post;
 
 import com.jinsite.domain.Post;
-import com.jinsite.request.PostSearch;
+import com.jinsite.request.post.PostSearch;
 
 import java.util.List;
 

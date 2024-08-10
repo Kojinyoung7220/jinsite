@@ -5,7 +5,7 @@ import com.jinsite.config.jinSiteMockUser;
 import com.jinsite.domain.Post;
 import com.jinsite.repository.post.PostRepository;
 import com.jinsite.repository.UserRepository;
-import com.jinsite.request.PostCreate;
+import com.jinsite.request.post.PostCreate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

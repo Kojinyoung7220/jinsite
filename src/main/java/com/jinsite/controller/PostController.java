@@ -1,9 +1,9 @@
 package com.jinsite.controller;
 
 import com.jinsite.config.UserPrincipal;
-import com.jinsite.request.PostCreate;
-import com.jinsite.request.PostEdit;
-import com.jinsite.request.PostSearch;
+import com.jinsite.request.post.PostCreate;
+import com.jinsite.request.post.PostEdit;
+import com.jinsite.request.post.PostSearch;
 import com.jinsite.response.PostResponse;
 import com.jinsite.service.PostService;
 import jakarta.validation.Valid;

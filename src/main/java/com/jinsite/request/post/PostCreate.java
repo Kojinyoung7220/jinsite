@@ -1,4 +1,4 @@
-package com.jinsite.request;
+package com.jinsite.request.post;
 
 import com.jinsite.exception.InvalidRequest;
 import jakarta.validation.constraints.NotBlank;

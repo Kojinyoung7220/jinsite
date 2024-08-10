@@ -2,6 +2,7 @@ package com.jinsite.controller;
 
 import com.jinsite.domain.Comment;
 import com.jinsite.request.comment.CommentCreate;
+import com.jinsite.request.comment.CommentDelete;
 import com.jinsite.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,11 @@ public class CommentController {
     @PostMapping("/posts/{postId}/comments")
     public void write(@PathVariable Long postId, @RequestBody @Valid CommentCreate request){
         commentService.write(postId, request);
+    }
+
+    @PostMapping("/comments/{commentId}/delete")
+    public void delete(@PathVariable Long commentId, @RequestBody @Valid CommentDelete request){
+        commentService.delete(commentId, request);
     }
 
 }
