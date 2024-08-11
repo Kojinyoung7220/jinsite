@@ -86,8 +86,8 @@ public class PostService {
                 .orElseThrow(PostNotFound::new);
 
 
-        PostEditor.PostEditorBuilder editorBuilder = post.toEditor();
-
+        PostEditor.PostEditorBuilder editorBuilder = post.toEditor();  /// TODO: 2024-08-11   //이 부분 이해가 잘안간다 확인하자
+        
         PostEditor postEditor = editorBuilder.title(postEdit.getTitle())
                 .content(postEdit.getContent())
                 .build();

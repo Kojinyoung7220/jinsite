@@ -97,6 +97,7 @@ class PostServiceTest {
                                     .content("신축아파트 " + i)
                                     .build();
                         }).collect(Collectors.toList());
+
         postRepository.saveAll(requestPosts);
 
 
